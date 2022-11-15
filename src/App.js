@@ -7,14 +7,14 @@ import Add from './Add';
 function App() {
   const [query, setQuery] = useState('');
   const [recipes, setRecipes] = useState([]);
-  const [healthLabel, setHealthLabel] = useState('vegetarian');
+  let [healthLabel, setHealthLabel] = useState('vegan');
   console.log(healthLabel);
   console.log(recipes);
 
   const YOUR_APP_ID = '414d3867';
   const YOUR_APP_KEY = 'e625324c178af278a07d9d71c5b90e3a';
   const url = `https://api.edamam.com/search?q=${query}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&health=${healthLabel}`;
-  //console.log(url);
+  console.log(url);
   
   const getRecipeInfo = async() => {
     var result = await axios.get(url);
@@ -29,6 +29,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // This will prevent page from reloading.
+    console.log(healthLabel);
     getRecipeInfo();
   }
 
@@ -50,8 +51,8 @@ function App() {
           value={query} 
           onChange={(e) => setQuery(e.target.value)} // Fat Arrow Function.
         />
-        <select className='app__healthLabels'>
-          <option value='vegan' onClick={() => setHealthLabel('vegan')}>vegan</option>
+        <select className='app__healthLabels' onChange={(e) => setHealthLabel(e.target.value)} value={healthLabel}>
+          <option value='vegan' onClick={(e) => setHealthLabel('vegan')}>vegan</option> {/* onClick is not working here */}
           <option value='vegetarian' onClick={() => setHealthLabel('vegetarian')}>vegetarian</option>
           <option value='low-sugar' onClick={() => setHealthLabel('low-sugar')}>low-sugar</option>
           <option value='dairy-free' onClick={() => setHealthLabel('dairy-free')}>dairy-free</option>
